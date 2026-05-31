@@ -2,13 +2,126 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Prueba</title>
+<title>Torneo Free Fire</title>
+
+<style>
+
+body{
+background:#111;
+color:white;
+font-family:Arial;
+padding:20px;
+}
+
+h1{
+text-align:center;
+color:#ff9900;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#ff9900;
+padding:10px;
+}
+
+td{
+padding:10px;
+text-align:center;
+border-bottom:1px solid #333;
+}
+
+.gold{
+background:#FFD700;
+color:black;
+}
+
+.silver{
+background:#C0C0C0;
+color:black;
+}
+
+.bronze{
+background:#CD7F32;
+}
+
+</style>
+
 </head>
+
 <body>
 
-<h1>🏆 TORNEO FREE FIRE</h1>
+<h1>🏆 CLASIFICACIÓN GENERAL</h1>
 
-<p>Si ves este texto, GitHub Pages funciona.</p>
+<table id="tabla">
+
+<thead>
+<tr>
+<th>#</th>
+<th>Equipo</th>
+<th>Puntos</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+<script>
+
+const csvURL = "PEGA_AQUI_TU_LINK_CSV";
+
+fetch(csvURL)
+.then(r => r.text())
+.then(data => {
+
+const filas = data.split("\n").slice(1);
+
+let equipos = [];
+
+filas.forEach(fila => {
+
+const c = fila.split(",");
+
+if(c[0]){
+
+equipos.push({
+equipo:c[0],
+puntos:Number(c[7])
+});
+
+}
+
+});
+
+equipos.sort((a,b)=>b.puntos-a.puntos);
+
+const tbody = document.querySelector("tbody");
+
+equipos.forEach((e,i)=>{
+
+let clase="";
+
+if(i===0) clase="gold";
+if(i===1) clase="silver";
+if(i===2) clase="bronze";
+
+tbody.innerHTML += `
+<tr class="${clase}">
+<td>${i+1}</td>
+<td>${e.equipo}</td>
+<td>${e.puntos}</td>
+</tr>
+`;
+
+});
+
+});
+
+</script>
 
 </body>
 </html>

@@ -2,129 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Torneo Free Fire</title>
-
-<style>
-
-body{
-background-image:url("marcaos.png");
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
-color:white;
-font-family:Arial;
-padding:20px;
-}
-
-h1{
-text-align:center;
-color:#ff9900;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-}
-
-th{
-background:#ff9900;
-padding:10px;
-}
-
-td{
-padding:10px;
-text-align:center;
-border-bottom:1px solid #333;
-}
-
-.gold{
-background:#FFD700;
-color:black;
-}
-
-.silver{
-background:#C0C0C0;
-color:black;
-}
-
-.bronze{
-background:#CD7F32;
-}
-
-</style>
-
+<title>Prueba</title>
 </head>
-
 <body>
 
-<h1>🏆 CLASIFICACIÓN GENERAL</h1>
+<h1>🏆 TORNEO FREE FIRE</h1>
 
-<table id="tabla">
-
-<thead>
-<tr>
-<th>#</th>
-<th>Equipo</th>
-<th>Puntos</th>
-</tr>
-</thead>
-
-<tbody></tbody>
-
-</table>
-
-<script>
-
-const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEs-CKTjGiTDH8f5cq0q-RaMAOhs9pWO1OdGPbBSVbSeZWsi-DSS2gzLZTNLqmetMZL1tFdV2-CtEI/pub?gid=0&single=true&output=csv";
-
-fetch(csvURL)
-.then(r => r.text())
-.then(data => {
-
-const filas = data.split("\n").slice(1);
-
-let equipos = [];
-
-filas.forEach(fila => {
-
-const c = fila.split(",");
-
-if(c[0]){
-
-equipos.push({
-equipo:c[0],
-puntos:Number(c[7])
-});
-
-}
-
-});
-
-equipos.sort((a,b)=>b.puntos-a.puntos);
-
-const tbody = document.querySelector("tbody");
-
-equipos.forEach((e,i)=>{
-
-let clase="";
-
-if(i===0) clase="gold";
-if(i===1) clase="silver";
-if(i===2) clase="bronze";
-
-tbody.innerHTML += `
-<tr class="${clase}">
-<td>${i+1}</td>
-<td>${e.equipo}</td>
-<td>${e.puntos}</td>
-</tr>
-`;
-
-});
-
-});
-
-</script>
+<p>Si ves este texto, GitHub Pages funciona.</p>
 
 </body>
 </html>

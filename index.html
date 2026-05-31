@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Torneo Free Fire</title>
 
 <style>
@@ -9,7 +10,7 @@ body{
 background:#111;
 color:white;
 font-family:Arial;
-padding:30px;
+padding:20px;
 }
 
 h1{
@@ -33,18 +34,18 @@ text-align:center;
 border-bottom:1px solid #333;
 }
 
-.top1{
-background:gold;
+.gold{
+background:#FFD700;
 color:black;
 }
 
-.top2{
-background:silver;
+.silver{
+background:#C0C0C0;
 color:black;
 }
 
-.top3{
-background:#cd7f32;
+.bronze{
+background:#CD7F32;
 }
 
 </style>
@@ -53,35 +54,74 @@ background:#cd7f32;
 
 <body>
 
-<h1>🏆 TORNEO FREE FIRE</h1>
+<h1>🏆 CLASIFICACIÓN GENERAL</h1>
 
-<table>
+<table id="tabla">
 
+<thead>
 <tr>
 <th>#</th>
 <th>Equipo</th>
 <th>Puntos</th>
 </tr>
+</thead>
 
-<tr class="top1">
-<td>1</td>
-<td>CAOS ESPORTS</td>
-<td>52</td>
-</tr>
-
-<tr class="top2">
-<td>2</td>
-<td>PHANTOM</td>
-<td>47</td>
-</tr>
-
-<tr class="top3">
-<td>3</td>
-<td>VORTEX</td>
-<td>43</td>
-</tr>
+<tbody></tbody>
 
 </table>
+
+<script>
+
+const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEs-CKTjGiTDH8f5cq0q-RaMAOhs9pWO1OdGPbBSVbSeZWsi-DSS2gzLZTNLqmetMZL1tFdV2-CtEI/pub?gid=0&single=true&output=csv";
+
+fetch(csvURL)
+.then(r => r.text())
+.then(data => {
+
+const filas = data.split("\n").slice(1);
+
+let equipos = [];
+
+filas.forEach(fila => {
+
+const c = fila.split(",");
+
+if(c[0]){
+
+equipos.push({
+equipo:c[0],
+puntos:Number(c[7])
+});
+
+}
+
+});
+
+equipos.sort((a,b)=>b.puntos-a.puntos);
+
+const tbody = document.querySelector("tbody");
+
+equipos.forEach((e,i)=>{
+
+let clase="";
+
+if(i===0) clase="gold";
+if(i===1) clase="silver";
+if(i===2) clase="bronze";
+
+tbody.innerHTML += `
+<tr class="${clase}">
+<td>${i+1}</td>
+<td>${e.equipo}</td>
+<td>${e.puntos}</td>
+</tr>
+`;
+
+});
+
+});
+
+</script>
 
 </body>
 </html>
